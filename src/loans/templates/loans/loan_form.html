@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %} Add Loan{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-12">
+		<h1>Add Loan</h1>
+	</div>
+	<div class="col-6">
+		<form action="" method="POST">
+			{% csrf_token %}
+			{{ form }}
+			<input type="submit" value="Add" class="btn btn-success mt-2 btn-md">
+		</form>
+	</div>
+</div>
+{% endblock %}

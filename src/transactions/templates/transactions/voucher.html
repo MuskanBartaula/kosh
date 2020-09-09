@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %} Voucher {% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-12 mt-5">
+		<div class="shadow-lg p-3 mb-5 bg-white rounded">
+			<div class="voucher-title text-center">
+				<h1>Lamsure Height Kosh</h1>
+			</div>
+			<div class="voucher-owner">
+				Name: {{ transaction.member }} <br>
+				Number of share: {{ transaction.member.number_of_share }}
+			</div>
+			<div class="voucher-detail">
+				<table>
+					<tr>
+						<th>S.N.</th>
+						<th>Particulars</th>
+						<th>Amount</th>
+					</tr>
+					<tr>
+						<td>1.</td>
+						<td>Monthly Saving</td>
+						<td>{{ transaction.monthly_saving }}</td>
+					</tr>
+					<tr>
+						<td>2.</td>
+						<td>Interest</td>
+						<td>{{ transaction.interest }}</td>
+					</tr>
+					<tr>
+						<td>3.</td>
+						<td>Loan Amount Paid</td>
+						<td>{{ transaction.loan_amount_paid }}</td>
+					</tr>
+					<tr>
+						<td>4.</td>
+						<td>Others</td>
+						<td>{{ transaction.others }}</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>Total</td>
+						<td>{{ transaction.total_amount_paid }}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

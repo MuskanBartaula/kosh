@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Members | Kosh {% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-12">
+		<div class="shadow p-3 mb-2 bg-white rounded">
+			<h1>Members</h1>
+		</div>
+	</div>
+	<div class="col-12">
+	{% if messages %}
+		{% for message in messages %}
+			{% if message.tags == 'success' %}
+			<div class="alert alert-success alert-dismissible fade show" role="alert">
+				<strong>Success!</strong> {{ message }}
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			{% elif message.tags == 'warning' %}
+				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+					<strong>Warning!</strong> {{ message }}
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			{% endif %}	
+		{% endfor %}
+	{% endif %}
+	</div>
+	<div class="col-4">
+		<div class="shadow p-3 mb-2 bg-white rounded">
+			<h2>Add Members</h2>
+			{% crispy form %}
+		</div>
+	</div>
+	<div class="col-8 ml-auto">
+		<div class="table-wrapper shadow p-3 mb-2 bg-white rounded">
+			<h2>Members List</h2>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Member's Name</th>
+						<th scope="col">Number of Share</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>	
+					{% for member in object_list %}
+
+					<tr>
+						<th scope="row">{{ member.membership_id }}</th>
+						<td>{{ member.name }}</td>
+						<td>{{ member.number_of_share }}</td>
+						<td>
+							<a href="{% url 'members:update' member.id %}">Edit</a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

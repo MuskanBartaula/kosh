@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Monthly Saving | Kosh {% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-12">
+		<p>
+			Note: This will be used to calculate the monthly saving of an individual member
+		</p>
+	</div>
+	<div class="col-6">
+		<div class="shadow p-3 mb-2 bg-white rounded">
+			{% crispy form %}
+		</div>
+	</div>
+</div>
+{% endblock %}

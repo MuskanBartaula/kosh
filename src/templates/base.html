@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+	<title>{% block title %} {% endblock %}</title>
+
+  <!-- Bootstrap core CSS -->
+	<link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'nepali-datepicker/css/nepali.datepicker.v3.2.min.css' %}">
+  <!-- Custom styles for this template -->
+	<link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
+	<link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+		{% include 'base/sidebar.html' %}
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      {% comment %}<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">{% endcomment %}
+        {% comment %}<button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>{% endcomment %}
+
+        {% comment %}<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">{% endcomment %}
+          {% comment %}<span class="navbar-toggler-icon"></span>{% endcomment %}
+        {% comment %}</button>{% endcomment %}
+
+        {% comment %}<div class="collapse navbar-collapse" id="navbarSupportedContent">{% endcomment %}
+          {% comment %}<ul class="navbar-nav ml-auto mt-2 mt-lg-0">{% endcomment %}
+            {% comment %}<li class="nav-item active">{% endcomment %}
+              {% comment %}<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>{% endcomment %}
+            {% comment %}</li>{% endcomment %}
+            {% comment %}<li class="nav-item">{% endcomment %}
+              {% comment %}<a class="nav-link" href="#">Link</a>{% endcomment %}
+            {% comment %}</li>{% endcomment %}
+            {% comment %}<li class="nav-item dropdown">{% endcomment %}
+              {% comment %}<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% endcomment %}
+                {% comment %}Dropdown{% endcomment %}
+              {% comment %}</a>{% endcomment %}
+              {% comment %}<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">{% endcomment %}
+                {% comment %}<a class="dropdown-item" href="#">Action</a>{% endcomment %}
+                {% comment %}<a class="dropdown-item" href="#">Another action</a>{% endcomment %}
+                {% comment %}<div class="dropdown-divider"></div>{% endcomment %}
+                {% comment %}<a class="dropdown-item" href="#">Something else here</a>{% endcomment %}
+              {% comment %}</div>{% endcomment %}
+            {% comment %}</li>{% endcomment %}
+          {% comment %}</ul>{% endcomment %}
+        {% comment %}</div>{% endcomment %}
+      {% comment %}</nav>{% endcomment %}
+
+      <div class="container-fluid">
+				{% block content %}
+				{% endblock %}
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+	<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'nepali-datepicker/js/nepali.datepicker.v3.2.min.js' %}"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+
+		var nepaliDate = document.getElementById("id_date");
+		nepaliDate.nepaliDatePicker();
+  </script>
+	{% block js %}
+	{% endblock %}
+
+</body>
+
+</html>
