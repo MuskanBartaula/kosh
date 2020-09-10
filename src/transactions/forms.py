@@ -153,7 +153,7 @@ class TransactionForm(forms.ModelForm):
         date = bs_to_ad(np_date_str)
 
         np_date = NepaliDate.to_nepali_date(date)
-        np_previous_month = get_nepali_prev_month(date)
+        np_previous_month = get_nepali_prev_month(np_date)
 
         previous_month_date = date.replace(day=1) - datetime.timedelta(days=1)
 
