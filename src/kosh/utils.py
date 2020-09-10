@@ -28,7 +28,7 @@ class NepaliDateUtils(object):
         '''
         self.np_date = np_date
 
-    def get_nepali_month_first_day(self):
+    def get_month_first_day(self):
         '''
             return the first date of the np_date passed as an argument
             
@@ -37,7 +37,7 @@ class NepaliDateUtils(object):
         '''
         return NepaliDate(self.np_date.year, self.np_date.month, 1)
 
-    def get_nepali_month_last_day(self):
+    def get_month_last_day(self):
         '''
             return the last date of the np_date passed as an argument
 
@@ -46,7 +46,7 @@ class NepaliDateUtils(object):
         '''
         return self.get_nepali_next_month() - datetime.timedelta(days=1)
 
-    def get_nepali_prev_month(self):
+    def get_prev_month(self):
         '''
             return the last date of the previous month
 
@@ -55,14 +55,14 @@ class NepaliDateUtils(object):
         '''
         return self.get_nepali_month_first_day() - datetime.timedelta(days=1)
 
-    def get_nepali_next_month(self):
+    def get_next_month(self):
         '''
             date must be of type nepali_date.date.NepaliDate
         '''
         return NepaliDate(self.np_date.year, self.np_date.month + 1, 1)
 
 
-    def start_end_date_of_bs_to_ad(self):
+    def start_end_date_in_ad(self):
         '''
             convert the Nepali first day and last day of a month to a english date 
             date must be of type nepali_date.date.NepaliDate
