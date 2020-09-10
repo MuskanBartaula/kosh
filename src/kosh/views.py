@@ -1,3 +1,4 @@
+import datetime
 import xlwt
 
 from django.http import HttpResponse
@@ -17,9 +18,21 @@ def members_monthly_transaction(request):
     if date_in_bs:
         transaction_date = bs_to_ad(date_in_bs)
     nepali_transaction_date = NepaliDate.to_nepali_date(transaction_date)
+
+    np_start_date = NepaliDate(nepali_transaction_date.year, nepali_transaction_date.month, 1)
+    np_next_month_start_date = NepaliDate(nepali_transaction_date.year, nepali_transaction_date.month + 1, 1)
+    np_end_date = np_next_month_start_date - datetime.timedelta(days=1)
+
+    start_date = np_start_date.to_english_date()
+    end_date = np_end_date.to_english_date()
+
+
+
+
     nepali_transaction_month = "{0:B}".format(nepali_transaction_date)
-    transactions = Transaction.objects.filter(date__year=transaction_date.year,
-                                              date__month=transaction_date.month)
+    transactions = Transaction.objects.filter(date__range=(start_date, end_date))
+    # transactions = Transaction.objects.filter(date__year=transaction_date.year,
+                                              # date__month=transaction_date.month)
     context = {
         'year': transaction_date.year,
         'month': transaction_date.month,
