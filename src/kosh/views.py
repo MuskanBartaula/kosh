@@ -7,7 +7,7 @@ from django.utils import timezone
 
 from nepali_date import NepaliDate
 
-from kosh.utils import split_date, bs_to_ad, NepaliDateUtils #start_end_date_of_bs_to_ad
+from kosh.utils import split_date, bs_to_ad, NepaliDateUtils
 from members.models import Member
 from transactions.models import Transaction
 
@@ -21,7 +21,7 @@ def members_monthly_transaction(request):
     nepali_transaction_date = NepaliDate.to_nepali_date(transaction_date)
 
     np_date_utils = NepaliDateUtils(nepali_transaction_date)
-    start_date, end_date = np_date_utils.start_end_date_of_bs_to_ad()
+    start_date, end_date = np_date_utils.start_end_date_in_ad()
 
     nepali_transaction_month = "{0:B}".format(nepali_transaction_date)
     transactions = Transaction.objects.filter(date__range=(start_date, end_date))

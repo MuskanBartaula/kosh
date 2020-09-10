@@ -10,7 +10,7 @@ from crispy_forms.layout import (
 )
 from nepali_date import NepaliDate
 
-from kosh.utils import bs_to_ad, NepaliDateUtils #get_nepali_prev_month, start_end_date_of_bs_to_ad 
+from kosh.utils import bs_to_ad, NepaliDateUtils
 from members.models import Member
 from .models import Transaction
 
@@ -128,7 +128,7 @@ class TransactionForm(forms.ModelForm):
 
         qs_exists = Transaction.objects.filter(member=member).exists()
         if qs_exists:
-            start_date, end_date = np_date_utils.start_end_date_of_bs_to_ad()
+            start_date, end_date = np_date_utils.start_end_date_in_ad()
             qs = Transaction.objects.filter(member=member,
                                             date__range=(start_date, end_date))
             if qs.exists():
@@ -136,10 +136,10 @@ class TransactionForm(forms.ModelForm):
                     "Data already entered for this month."
                 )
 
-            np_previous_month = np_date_utils.get_nepali_prev_month()
+            np_previous_month_date = np_date_utils.get_prev_month()
 
-            np_date_utils_2 = NepaliDateUtils(np_previous_month)
-            prev_month_start_end_date = np_date_utils_2.start_end_date_of_bs_to_ad()
+            np_date_utils_2 = NepaliDateUtils(np_previous_month_date)
+            prev_month_start_end_date = np_date_utils_2.start_end_date_in_ad()
             np_prev_month_start_date, np_prev_month_end_date = prev_month_start_end_date 
 
             qs2 = Transaction.objects.filter(
