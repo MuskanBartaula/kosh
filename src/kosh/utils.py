@@ -44,7 +44,7 @@ class NepaliDateUtils(object):
             Example:
                 if 2077-05-23 then it return 2077-05-31
         '''
-        return self.get_nepali_next_month() - datetime.timedelta(days=1)
+        return self.get_next_month() - datetime.timedelta(days=1)
 
     def get_prev_month(self):
         '''
@@ -53,7 +53,7 @@ class NepaliDateUtils(object):
             Example:
                 if 2077-5-23 the it return 2077-4-32
         '''
-        return self.get_nepali_month_first_day() - datetime.timedelta(days=1)
+        return self.get_month_first_day() - datetime.timedelta(days=1)
 
     def get_next_month(self):
         '''
@@ -67,6 +67,6 @@ class NepaliDateUtils(object):
             convert the Nepali first day and last day of a month to a english date 
             date must be of type nepali_date.date.NepaliDate
         '''
-        start_date = self.get_nepali_month_first_day().to_english_date()
-        end_date = self.get_nepali_month_last_day().to_english_date()
+        start_date = self.get_month_first_day().to_english_date()
+        end_date = self.get_month_last_day().to_english_date()
         return start_date, end_date
