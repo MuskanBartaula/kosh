@@ -10,39 +10,9 @@ from crispy_forms.layout import (
 )
 from nepali_date import NepaliDate
 
-from kosh.utils import bs_to_ad, get_nepali_prev_month
+from kosh.utils import bs_to_ad, get_nepali_prev_month, start_end_date_of_bs_to_ad 
 from members.models import Member
 from .models import Transaction
-
-def instance_date_list_in_bs(instance_list):
-    '''
-        instance_list must be a queryset of model instance
-        and must have a date field
-
-        return the nepali date list of an instance date
-    '''
-    instance_date_list = []
-    for instance in instance_list:
-        instance_np_date = NepaliDate.to_nepali_date(instance.date)
-        instance_date_list.append(instance_np_date)
-    return instance_date_list
-
-def transaction_month_exists(member, transaction_date):
-    '''
-        if transaction has already done on the same month in same year
-            return True 
-        else 
-            return False
-
-    '''
-    member_transactions = Transaction.objects.filter(member=member)
-    nep_transaction_date_list = instance_date_list_in_bs(member_transactions)
-    for nep_member_transaction_date in nep_transaction_date_list:
-        is_year_equal = transaction_date.year == nep_member_transaction_date.year
-        is_month_equal = transaction_date.month == nep_member_transaction_date.month
-        if is_year_equal and is_month_equal:
-            return True
-    return False
 
 class AddMemberToTransactionForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -159,10 +129,16 @@ class TransactionForm(forms.ModelForm):
 
         qs_exists = Transaction.objects.filter(member=member).exists()
         if qs_exists:
-            if transaction_month_exists(member, np_date):
+            start_date, end_date = start_end_date_of_bs_to_ad(np_date)
+            qs = Transaction.objects.filter(member=member, date__range=(start_date, end_date))
+            if qs.exists():
                 raise forms.ValidationError(
                     "Data already entered for this month."
                 )
+            # if transaction_month_exists(member, np_date):
+                # raise forms.ValidationError(
+                    # "Data already entered for this month."
+                # )
 
             qs2 = Transaction.objects.filter(
                 member=member,
