@@ -10,7 +10,7 @@ from crispy_forms.layout import (
 )
 from nepali_date import NepaliDate
 
-from kosh.utils import bs_to_ad, get_nepali_prev_month, start_end_date_of_bs_to_ad 
+from kosh.utils import bs_to_ad, NepaliDateUtils #get_nepali_prev_month, start_end_date_of_bs_to_ad 
 from members.models import Member
 from .models import Transaction
 
@@ -112,8 +112,8 @@ class TransactionForm(forms.ModelForm):
         if loan_amount_paid is not None:
             if loan_amount_paid > previous_month_loan:
                 raise forms.ValidationError("Loan Amount is not that much high.")
-        if previous_month_loan < 0:
-            raise forms.ValidationError("No loan amount to be paid.")
+            if previous_month_loan < 0:
+                raise forms.ValidationError("No loan amount to be paid.")
         return loan_amount_paid
 
     def clean_date(self):
@@ -123,27 +123,28 @@ class TransactionForm(forms.ModelForm):
         date = bs_to_ad(np_date_str)
 
         np_date = NepaliDate.to_nepali_date(date)
-        np_previous_month = get_nepali_prev_month(np_date)
 
-        previous_month_date = date.replace(day=1) - datetime.timedelta(days=1)
+        np_date_utils = NepaliDateUtils(np_date)
 
         qs_exists = Transaction.objects.filter(member=member).exists()
         if qs_exists:
-            start_date, end_date = start_end_date_of_bs_to_ad(np_date)
-            qs = Transaction.objects.filter(member=member, date__range=(start_date, end_date))
+            start_date, end_date = np_date_utils.start_end_date_of_bs_to_ad()
+            qs = Transaction.objects.filter(member=member,
+                                            date__range=(start_date, end_date))
             if qs.exists():
                 raise forms.ValidationError(
                     "Data already entered for this month."
                 )
-            # if transaction_month_exists(member, np_date):
-                # raise forms.ValidationError(
-                    # "Data already entered for this month."
-                # )
+
+            np_previous_month = np_date_utils.get_nepali_prev_month()
+
+            np_date_utils_2 = NepaliDateUtils(np_previous_month)
+            prev_month_start_end_date = np_date_utils_2.start_end_date_of_bs_to_ad()
+            np_prev_month_start_date, np_prev_month_end_date = prev_month_start_end_date 
 
             qs2 = Transaction.objects.filter(
                 member=member,
-                date__year=previous_month_date.year,
-                date__month=previous_month_date.month
+                date__range=(np_prev_month_start_date, np_prev_month_end_date)
             )
             if not qs2.exists():
                 raise forms.ValidationError(
