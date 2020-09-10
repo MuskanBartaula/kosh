@@ -1,6 +1,7 @@
 ngo Static Files
 static_cdn
 
+*.swp
 # SQLite3
 db.sqlite3
 
