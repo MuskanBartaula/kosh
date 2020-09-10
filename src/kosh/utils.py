@@ -59,7 +59,11 @@ class NepaliDateUtils(object):
         '''
             date must be of type nepali_date.date.NepaliDate
         '''
-        return NepaliDate(self.np_date.year, self.np_date.month + 1, 1)
+        try:
+           next_month_date = NepaliDate(self.np_date.year, self.np_date.month+1, 1)
+        except ValueError:
+            next_month_date = NepaliDate(self.np_date.year+1, 1, 1)
+        return next_month_date
 
 
     def start_end_date_in_ad(self):
