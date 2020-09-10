@@ -44,7 +44,7 @@ class NepaliDateUtils(object):
             Example:
                 if 2077-05-23 then it return 2077-05-31
         '''
-        return get_nepali_next_month(self.np_date) - datetime.timedelta(days=1)
+        return self.get_nepali_next_month() - datetime.timedelta(days=1)
 
     def get_nepali_prev_month(self):
         '''
@@ -53,7 +53,7 @@ class NepaliDateUtils(object):
             Example:
                 if 2077-5-23 the it return 2077-4-32
         '''
-        return get_nepali_month_first_day(self.np_date) - datetime.timedelta(days=1)
+        return self.get_nepali_month_first_day() - datetime.timedelta(days=1)
 
     def get_nepali_next_month(self):
         '''
@@ -67,50 +67,6 @@ class NepaliDateUtils(object):
             convert the Nepali first day and last day of a month to a english date 
             date must be of type nepali_date.date.NepaliDate
         '''
-        start_date = get_nepali_month_first_day(self.np_date).to_english_date()
-        end_date = get_nepali_month_last_day(self.np_date).to_english_date()
+        start_date = self.get_nepali_month_first_day().to_english_date()
+        end_date = self.get_nepali_month_last_day().to_english_date()
         return start_date, end_date
-
-
-
-
-# def get_nepali_month_first_day(np_date):
-    # '''
-        # date must be of type nepali_date.date.NepaliDate
-        # return the first date of the np_date passed as an argument
-        
-        # Example:
-            # if 2077-05-23 then it return 2077-05-01
-    # '''
-    # return NepaliDate(np_date.year, np_date.month, 1)
-
-# def get_nepali_prev_month(np_date):
-    # '''
-        # date must be of type nepali_date.date.NepaliDate
-    # '''
-    # return get_nepali_month_first_day(np_date) - datetime.timedelta(days=1)
-
-# def get_nepali_next_month(np_date):
-    # '''
-        # date must be of type nepali_date.date.NepaliDate
-    # '''
-    # return NepaliDate(np_date.year, np_date.month + 1, 1)
-
-# def get_nepali_month_last_day(np_date):
-    # '''
-        # date must be of type nepali_date.date.NepaliDate
-        # return the last date of the np_date passed as an argument
-
-        # Example:
-            # if 2077-05-23 then it return 2077-05-31
-    # '''
-    # return get_nepali_next_month(np_date) - datetime.timedelta(days=1)
-
-# def start_end_date_of_bs_to_ad(np_date):
-    # '''
-        # convert the Nepali first day and last day of a month to a english date 
-        # date must be of type nepali_date.date.NepaliDate
-    # '''
-    # start_date = get_nepali_month_first_day(np_date).to_english_date()
-    # end_date = get_nepali_month_last_day(np_date).to_english_date()
-    # return start_date, end_date
