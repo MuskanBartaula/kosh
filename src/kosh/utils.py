@@ -28,6 +28,18 @@ def get_nepali_prev_month(date):
     np_prev_month = np_month_first_day - datetime.timedelta(days=1)
     return np_prev_month
 
+def start_end_date_of_bs_to_ad(np_date):
+    '''
+        convert the Nepali first day and last day of a month to a english date 
+    '''
+    np_start_date = NepaliDate(np_date.year, np_date.month, 1)
+    np_next_month_start_date = NepaliDate(np_date.year, np_date.month + 1, 1)
+    np_end_date = np_next_month_start_date - datetime.timedelta(days=1)
+
+    start_date = np_start_date.to_english_date()
+    end_date = np_end_date.to_english_date()
+    return start_date, end_date
+
 def get_nepali_date(english_date):
     if english_date is not None:
         nepali_date = NepaliDate.to_nepali_date(
