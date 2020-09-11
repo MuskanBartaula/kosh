@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load nepali_date %}
 {% block title %} Voucher | {{ transaction.member.name }}{% endblock %}
 {% block content %}
 <div class="row">
@@ -20,7 +21,7 @@
 						<td>Number of Share: </td>
 						<td> {{ transaction.member.number_of_share }} </td>
 						<td>Date:</td>
-						<td> {{ transaction.date }} </td>
+						<td> {{ transaction.date | nepali_date:"%Y/%m/%d" }} </td>
 					</tr>
 				</table>
 			</div>
