@@ -30,6 +30,7 @@
 						<th scope="col">Remaining Loan Amount</th>
 						<th scope="col">Additional Loan</th>
 						<th scope="col">Total Loan Amount</th>
+						<th scope="col">Voucher</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -50,6 +51,7 @@
 								<td>{{ transaction.remaining_loan_amount }}</td>
 								<td>{{ transaction.additional_loan_amount }}</td>
 								<td>{{ transaction.total_loan_amount }}</td>
+								<td><a href="{% url 'transactions:vouchers' transaction.id %}">Print</a></td>
 							{% endif %}
 					{% endfor %}
 

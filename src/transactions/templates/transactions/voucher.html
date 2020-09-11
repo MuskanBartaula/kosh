@@ -1,18 +1,32 @@
 {% extends 'base.html' %}
-{% block title %} Voucher {% endblock %}
+{% block title %} Voucher | {{ transaction.member.name }}{% endblock %}
 {% block content %}
 <div class="row">
-	<div class="col-12 mt-5">
-		<div class="shadow-lg p-3 mb-5 bg-white rounded">
+	<div class="col-6 mt-5 mx-auto">
+		<div class="float-right print-button">
+			<a href="" class="btn btn-success">Print</a>
+		</div>
+		<div class="shadow-lg p-3 mb-1 bg-white rounded">
 			<div class="voucher-title text-center">
-				<h1>Lamsure Height Kosh</h1>
+				<h1>Invoice</h1>
 			</div>
 			<div class="voucher-owner">
-				Name: {{ transaction.member }} <br>
-				Number of share: {{ transaction.member.number_of_share }}
+				<table class="mb-2">
+					<tr>
+						<td>Member's Name:</td>
+						<td> {{ transaction.member.name }} </td>
+					</tr>
+					<tr>
+						<td>Number of Share: </td>
+						<td> {{ transaction.member.number_of_share }} </td>
+						<td>Date:</td>
+						<td> {{ transaction.date }} </td>
+					</tr>
+				</table>
 			</div>
+			<!-- Voucher owner's Information ends here -->
 			<div class="voucher-detail">
-				<table>
+				<table class="table">
 					<tr>
 						<th>S.N.</th>
 						<th>Particulars</th>
@@ -45,7 +59,9 @@
 					</tr>
 				</table>
 			</div>
+			<!-- Voucher Detail ends here -->
 		</div>
+		<!-- shadow div ends here -->
 	</div>
 </div>
 {% endblock %}
