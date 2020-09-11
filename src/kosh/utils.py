@@ -22,13 +22,13 @@ def bs_to_ad(date_in_bs):
     return en_date
 
 class NepaliDateUtils(object):
-    def __init__(self, np_date, *args, **kwargs):
+    def __init__(self, date, *args, **kwargs):
         '''
             date must be of type nepali_date.date.NepaliDate
         '''
-        self.np_date = np_date
+        self.np_date = date
 
-    def get_month_first_day(self):
+    def get_month_first_day(self, date=None):
         '''
             return the first date of the np_date passed as an argument
             
