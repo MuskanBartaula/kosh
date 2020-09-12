@@ -16,6 +16,7 @@ from transactions.models import Transaction
 def members_monthly_transaction(request):
     date_in_bs = request.GET.get('date')
 
+    form = TransactionDateFilterForm()
     transaction_date = timezone.now().date()
     if date_in_bs:
         data = {'date': date_in_bs}

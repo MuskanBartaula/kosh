@@ -28,7 +28,11 @@ class NepaliDateCharField(forms.CharField):
         ]
 
 class TransactionDateFilterForm(forms.Form):
-    date = NepaliDateCharField()
+    date = NepaliDateCharField(widget=forms.TextInput(
+        attrs = {
+            'placeholder': 'Choose a date here'
+        }
+    ), label="")
 
 class AddMemberToTransactionForm(forms.Form):
     def __init__(self, *args, **kwargs):
