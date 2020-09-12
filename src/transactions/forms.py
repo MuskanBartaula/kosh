@@ -14,6 +14,20 @@ from kosh.utils import bs_to_ad, NepaliDateUtils
 from members.models import Member
 from .models import Transaction
 
+nepali_date_regex = '(^[12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[012])$)'
+
+class NepaliDateCharField(forms.CharField):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.max_length = 12
+        self.validators = [
+            RegexValidator(
+              regex=nepali_date_regex,
+              message="Enter a valid date",
+            )
+        ]
+
+
 class AddMemberToTransactionForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -38,7 +52,6 @@ class AddMemberToTransactionForm(forms.Form):
         return member_id
 
 
-nepali_date_regex = '(^[12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[012])$)'
 
 class TransactionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
