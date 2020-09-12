@@ -10,10 +10,16 @@ urlpatterns = [
          views.add_member_to_transaction,
          name="add_member_to_transaction"
     ),
+
     path(
         'create/<int:member_id>/',
          views.TransactionCreateView.as_view(),
          name="create"
+    ),
+    path(
+        'update/<int:pk>/',
+        views.TransactionUpdateView.as_view(),
+        name="update"
     ),
 
     path(

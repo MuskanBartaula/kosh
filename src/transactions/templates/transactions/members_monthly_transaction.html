@@ -11,7 +11,7 @@
 		<div class="shadow-lg p-3 mb-5 bg-white rounded">
 			<a href="{% url 'export_to_excel' year month %}">Export To Excel </a>
 			<form action="" class="form-inline mb-2 float-right">
-				<input type="text" name="date" id="id_date" value="{{ request.GET.date }}"autocomplete="off" placeholder="Click here to pick date" class="form-control"/>
+				<input type="text" name="date" class="form-control" id="id_date" placeholder="Click here to pick date" value="{{ request.GET.date }}" autocomplete="off"/>
 				<button class="btn btn-success px-4">Filter</button>
 			</form>
 			<table class="table table-responsive">
@@ -31,6 +31,8 @@
 						<th scope="col">Additional Loan</th>
 						<th scope="col">Total Loan Amount</th>
 						<th scope="col">Voucher</th>
+						<th scope="col">Action</th>
+						
 					</tr>
 				</thead>
 				<tbody>
@@ -52,6 +54,7 @@
 								<td>{{ transaction.additional_loan_amount }}</td>
 								<td>{{ transaction.total_loan_amount }}</td>
 								<td><a href="{% url 'transactions:vouchers' transaction.id %}">Print</a></td>
+								<td><a href="{% url 'transactions:update' transaction.id %}">Edit</a></td>
 							{% endif %}
 					{% endfor %}
 

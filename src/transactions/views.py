@@ -3,9 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
-
 from nepali_date import NepaliDate
-
 
 from loans.models import Loan
 from members.models import Member, MonthlySaving
@@ -71,9 +69,28 @@ class TransactionCreateView(generic.CreateView):
             context['last_paid_date'] = nepali_date
         return context
 
+class TransactionUpdateView(generic.UpdateView):
+    model = Transaction
+    form_class = TransactionForm
+    template_name = "transactions/transaction_form.html"
+
+    def get_initial(self):
+        date = self.get_object().date
+        np_date = str(NepaliDate.to_nepali_date(date).strfdate("%Y-%m-%d"))
+        print(date)
+        print(np_date)
+        initial_data = {
+            'date': np_date
+        }
+        return initial_data
+
 
 def transaction_voucher(request, id):
-    transaction = Transaction.objects.get(id=id)
+    try:
+        transaction = Transaction.objects.get(id=id)
+    except Transaction.DoesNotExist:
+        messages.warning(request, "Perhaps the member doesn't exists.")
+        return redirect('members:index')
     context = {
         'transaction': transaction,
     }
