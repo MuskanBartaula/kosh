@@ -11,7 +11,8 @@
 		<div class="shadow-lg p-3 mb-5 bg-white rounded">
 			<a href="{% url 'export_to_excel' year month %}">Export To Excel </a>
 			<form action="" class="form-inline mb-2 float-right">
-				<input type="text" name="date" class="form-control" id="id_date" placeholder="Click here to pick date" value="{{ request.GET.date }}" autocomplete="off"/>
+				{% comment %}<input type="text" name="date" class="form-control" id="id_date" placeholder="Click here to pick date" value="{{ request.GET.date }}" autocomplete="off"/>{% endcomment %}
+				{{ form }}
 				<button class="btn btn-success px-4">Filter</button>
 			</form>
 			<table class="table table-responsive">

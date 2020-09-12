@@ -27,6 +27,8 @@ class NepaliDateCharField(forms.CharField):
             )
         ]
 
+class TransactionDateFilterForm(forms.Form):
+    date = NepaliDateCharField()
 
 class AddMemberToTransactionForm(forms.Form):
     def __init__(self, *args, **kwargs):

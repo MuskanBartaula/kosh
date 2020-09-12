@@ -9,14 +9,20 @@ from nepali_date import NepaliDate
 
 from kosh.utils import split_date, bs_to_ad, NepaliDateUtils
 from members.models import Member
+from transactions.forms import TransactionDateFilterForm
 from transactions.models import Transaction
 
 
 def members_monthly_transaction(request):
     date_in_bs = request.GET.get('date')
+
     transaction_date = timezone.now().date()
     if date_in_bs:
-        transaction_date = bs_to_ad(date_in_bs)
+        data = {'date': date_in_bs}
+        form = TransactionDateFilterForm(data)
+        if form.is_valid():
+            np_date_str = form.cleaned_data.get('date')
+            transaction_date = bs_to_ad(np_date_str)
 
     nepali_transaction_date = NepaliDate.to_nepali_date(transaction_date)
 
@@ -26,6 +32,7 @@ def members_monthly_transaction(request):
     nepali_transaction_month = "{0:B}".format(nepali_transaction_date)
     transactions = Transaction.objects.filter(date__range=(start_date, end_date))
     context = {
+        'form': form,
         'year': transaction_date.year,
         'month': transaction_date.month,
         'members': Member.objects.all(),
