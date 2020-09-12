@@ -61,15 +61,8 @@ class TransactionForm(forms.ModelForm):
         self.fields['others'].widget = forms.TextInput()
         self.fields['loan_amount_paid'].widget = forms.TextInput()
         self.fields['additional_loan_amount'].widget = forms.TextInput()
-        self.fields['date'] = forms.CharField(
-            max_length=12,
-            validators=[
-                RegexValidator(
-                  regex=nepali_date_regex,
-                  message="Enter a valid date",
-                )
-            ]
-        )
+        self.fields['date'] = NepaliDateCharField()
+
         self.helper = FormHelper()
         self.helper.form_class = "form-horizontal"
         self.helper.label_class = "col-4"
