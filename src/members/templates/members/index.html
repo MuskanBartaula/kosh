@@ -56,6 +56,7 @@
 						<td>{{ member.number_of_share }}</td>
 						<td>
 							<a href="{% url 'members:update' member.id %}">Edit</a>
+							<a href="{% url 'members:delete' member.id %}">Delete</a>
 						</td>
 					</tr>
 					{% endfor %}
