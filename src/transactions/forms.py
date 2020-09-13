@@ -141,26 +141,35 @@ class TransactionForm(forms.ModelForm):
         qs_exists = Transaction.objects.filter(member=member).exists()
         if qs_exists:
             start_date, end_date = np_date_utils.start_end_date_in_ad()
-            qs = Transaction.objects.filter(member=member,
-                                            date__range=(start_date, end_date))
+            if self.instance:
+                qs = Transaction.objects.filter(
+                    member=member,
+                    date__range=(start_date, end_date)).exclude(pk=self.instance.pk)
+            else:
+                qs = Transaction.objects.filter(member=member,
+                                                date__range=(start_date, end_date))
             if qs.exists():
                 raise forms.ValidationError(
                     "Data already entered for this month."
                 )
 
+            
             np_previous_month_date = np_date_utils.get_prev_month()
 
             np_date_utils_2 = NepaliDateUtils(np_previous_month_date)
             prev_month_start_end_date = np_date_utils_2.start_end_date_in_ad()
             np_prev_month_start_date, np_prev_month_end_date = prev_month_start_end_date 
 
-            qs2 = Transaction.objects.filter(
-                member=member,
-                date__range=(np_prev_month_start_date, np_prev_month_end_date)
-            )
-            if not qs2.exists():
-                raise forms.ValidationError(
-                    "Transaction has not been done on previous month."
+
+            first_instance = Transaction.objects.filter(member=member).order_by('timestamp')[0]
+            if self.instance != first_instance:
+                qs2 = Transaction.objects.filter(
+                    member=member,
+                    date__range=(np_prev_month_start_date, np_prev_month_end_date)
                 )
-        
+                if not qs2.exists():
+                    raise forms.ValidationError(
+                        "Transaction has not been done on previous month."
+                    )
+            
         return date
