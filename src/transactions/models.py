@@ -34,6 +34,11 @@ class Transaction(models.Model):
     def __str__(self):
         return self.member.name + " transactions"
 
+    def save(self, *args, **kwargs):
+        self.remaining_loan_amount = self.previous_month_loan - self.loan_amount_paid
+        self.total_loan_amount = self.remaining_loan_amount + self.additional_loan_amount
+        return super().save(*args, **kwargs)
+
 def transaction_post_save_receiver(sender, instance, created, *args, **kwargs):
     if created:
         loan_qs = Loan.objects.filter(member=instance.member)

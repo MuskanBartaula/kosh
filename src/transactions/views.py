@@ -73,16 +73,37 @@ class TransactionUpdateView(generic.UpdateView):
     model = Transaction
     form_class = TransactionForm
     template_name = "transactions/transaction_form.html"
+    success_url = '/'
 
     def get_initial(self):
         date = self.get_object().date
         np_date = str(NepaliDate.to_nepali_date(date).strfdate("%Y-%m-%d"))
-        print(date)
-        print(np_date)
+
         initial_data = {
             'date': np_date
         }
+
         return initial_data
+
+    def form_valid(self, form):
+        current_transaction = self.get_object()
+        upcoming_transactions = Transaction.objects.filter(
+            member=current_transaction.member,
+            date__gt=current_transaction.date,
+        ).order_by('date')
+        previous_month_loan = form.cleaned_data.get('total_loan_amount')
+        prev_transaction = current_transaction
+        for transaction in upcoming_transactions:
+            print("Transaction Date:", transaction.date)
+
+            # transaction.previous_month_loan = prev_transaction.total_loan_amount
+            transaction.previous_month_loan = previous_month_loan 
+            print(transaction.previous_month_loan)
+            transaction.save()
+            prev_transaction = transaction
+            previous_month_loan = prev_transaction.total_loan_amount
+
+        return super(TransactionUpdateView, self).form_valid(form)
 
 
 def transaction_voucher(request, id):
