@@ -94,11 +94,7 @@ class TransactionUpdateView(generic.UpdateView):
         previous_month_loan = form.cleaned_data.get('total_loan_amount')
         prev_transaction = current_transaction
         for transaction in upcoming_transactions:
-            print("Transaction Date:", transaction.date)
-
-            # transaction.previous_month_loan = prev_transaction.total_loan_amount
             transaction.previous_month_loan = previous_month_loan 
-            print(transaction.previous_month_loan)
             transaction.save()
             prev_transaction = transaction
             previous_month_loan = prev_transaction.total_loan_amount
