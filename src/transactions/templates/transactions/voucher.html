@@ -5,9 +5,9 @@
 <div class="row">
 	<div class="col-6 mt-5 mx-auto">
 		<div class="float-right print-button">
-			<a href="" class="btn btn-success">Print</a>
+			<button id="print" class="btn btn-success px-4">Print</button>
 		</div>
-		<div class="shadow-lg p-3 mb-1 bg-white rounded">
+		<div class="print-this shadow-lg p-3 mb-1 bg-white rounded">
 			<div class="voucher-title text-center">
 				<h1>Invoice</h1>
 			</div>
@@ -65,4 +65,12 @@
 		<!-- shadow div ends here -->
 	</div>
 </div>
+{% endblock %}
+{% block js %}
+<script>
+
+	$('#print').on('click', function() {
+		$('.print-this').printThis()
+	})
+</script>
 {% endblock %}
