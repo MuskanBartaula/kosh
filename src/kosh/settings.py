@@ -63,9 +63,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-AUTH_USER_MODEL = 'accounts.User'
 
 ROOT_URLCONF = 'kosh.urls'
+
+AUTH_USER_MODEL = 'accounts.User'
+LOGIN_REDIRECT_URL = '/'
+
 
 TEMPLATES = [
     {
