@@ -26,7 +26,7 @@ class NepaliDateUtils(object):
         '''
             date must be of type nepali_date.date.NepaliDate
         '''
-        if not isinstance(date, type(NepaliDate)):
+        if not isinstance(date, NepaliDate):
             raise TypeError("Date must be instance of NepaliDate class")
         self.np_date = date
 
@@ -61,10 +61,20 @@ class NepaliDateUtils(object):
         '''
             date must be of type nepali_date.date.NepaliDate
         '''
-        first_day = self.get_month_first_day()
-        next_month = first_day + datetime.timedelta(days=35)
-        next_month_first_day = NepaliDate(next_month.year, next_month.month, 1)
-        return next_month_first_day
+        if self.np_date.month == 12:
+            try:
+                next_month = NepaliDate(self.np_date.year + 1, 1, 1)
+            except ValueError:
+                raise Http404("Date out of range")
+            pass
+        else:
+            next_month = NepaliDate(self.np_date.year, self.np_date.month + 1, 1)
+        return next_month
+        
+        # first_day = self.get_month_first_day()
+        # next_month = first_day + datetime.timedelta(days=35)
+        # next_month_first_day = NepaliDate(next_month.year, next_month.month, 1)
+        # return next_month_first_day
 
     def start_end_date_in_ad(self):
         '''
