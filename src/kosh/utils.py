@@ -53,13 +53,16 @@ class NepaliDateUtils(object):
             return the last date of the previous month
 
             Example:
-                if 2077-5-23 the it return 2077-4-32
+                if 2077-5-23 then it return 2077-4-32
         '''
         return self.get_month_first_day() - datetime.timedelta(days=1)
 
     def get_next_month(self):
         '''
-            date must be of type nepali_date.date.NepaliDate
+            return the next month first day
+
+            Example:
+                if 2077-5-23 then it return 2077-6-1
         '''
         if self.np_date.month == 12:
             try:
@@ -71,15 +74,9 @@ class NepaliDateUtils(object):
             next_month = NepaliDate(self.np_date.year, self.np_date.month + 1, 1)
         return next_month
         
-        # first_day = self.get_month_first_day()
-        # next_month = first_day + datetime.timedelta(days=35)
-        # next_month_first_day = NepaliDate(next_month.year, next_month.month, 1)
-        # return next_month_first_day
-
     def start_end_date_in_ad(self):
         '''
             convert the Nepali first day and last day of a month to a english date 
-            date must be of type nepali_date.date.NepaliDate
         '''
         start_date = self.get_month_first_day().to_english_date()
         end_date = self.get_month_last_day().to_english_date()
