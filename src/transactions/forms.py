@@ -156,8 +156,8 @@ class TransactionForm(forms.ModelForm):
             
             np_previous_month_date = np_date_utils.get_prev_month()
 
-            np_date_utils_2 = NepaliDateUtils(np_previous_month_date)
-            prev_month_start_end_date = np_date_utils_2.start_end_date_in_ad()
+            np_previous_month_date_utils = NepaliDateUtils(np_previous_month_date)
+            prev_month_start_end_date = np_previous_month_date_utils.start_end_date_in_ad()
             np_prev_month_start_date, np_prev_month_end_date = prev_month_start_end_date 
 
 
