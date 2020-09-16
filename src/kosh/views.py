@@ -29,17 +29,13 @@ def members_monthly_transaction(request):
 
     np_date_utils = NepaliDateUtils(nepali_transaction_date)
     start_date, end_date = np_date_utils.start_end_date_in_ad()
-
-    nepali_transaction_month = "{0:B}".format(nepali_transaction_date)
     transactions = Transaction.objects.filter(date__range=(start_date, end_date))
+
     context = {
         'form': form,
-        'year': transaction_date.year,
-        'month': transaction_date.month,
+        'transaction_date': transaction_date,
         'members': Member.objects.all(),
         'transactions': transactions,
-        'nepali_transaction_month': nepali_transaction_month, 
-        'nepali_transaction_year': nepali_transaction_date.year, 
     }
     return render(request, "transactions/members_monthly_transaction.html", context)
 
