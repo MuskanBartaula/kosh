@@ -27,7 +27,7 @@ class NepaliDateUtils(object):
             date must be of type nepali_date.date.NepaliDate
         '''
         if not isinstance(date, NepaliDate):
-            raise TypeError("Date must be instance of NepaliDate class")
+            raise ValueError("Date must be instance of NepaliDate class")
         self.np_date = date
 
     def get_month_first_day(self, date=None):
