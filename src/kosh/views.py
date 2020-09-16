@@ -25,9 +25,7 @@ def members_monthly_transaction(request):
             np_date_str = form.cleaned_data.get('date')
             transaction_date = bs_to_ad(np_date_str)
 
-    nepali_transaction_date = NepaliDate.to_nepali_date(transaction_date)
-
-    np_date_utils = NepaliDateUtils(nepali_transaction_date)
+    np_date_utils = NepaliDateUtils(transaction_date)
     start_date, end_date = np_date_utils.start_end_date_in_ad()
     transactions = Transaction.objects.filter(date__range=(start_date, end_date))
 

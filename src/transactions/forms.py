@@ -134,9 +134,7 @@ class TransactionForm(forms.ModelForm):
 
         date = bs_to_ad(np_date_str)
 
-        np_date = NepaliDate.to_nepali_date(date)
-
-        np_date_utils = NepaliDateUtils(np_date)
+        np_date_utils = NepaliDateUtils(date)
 
         qs_exists = Transaction.objects.filter(member=member).exists()
         if qs_exists:
@@ -153,13 +151,10 @@ class TransactionForm(forms.ModelForm):
                     "Data already entered for this month."
                 )
 
-            
-            np_previous_month_date = np_date_utils.get_prev_month()
-
-            np_previous_month_date_utils = NepaliDateUtils(np_previous_month_date)
+            previous_month_date = np_date_utils.get_prev_month().to_english_date()
+            np_previous_month_date_utils = NepaliDateUtils(previous_month_date)
             prev_month_start_end_date = np_previous_month_date_utils.start_end_date_in_ad()
             np_prev_month_start_date, np_prev_month_end_date = prev_month_start_end_date 
-
 
             first_instance = Transaction.objects.filter(member=member).order_by('timestamp')[0]
             if self.instance != first_instance:
