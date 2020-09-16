@@ -39,10 +39,6 @@ class Transaction(models.Model):
         self.total_loan_amount = self.remaining_loan_amount + self.additional_loan_amount
         return super().save(*args, **kwargs)
 
-    def get_nepali_date(self):
-        np_date = NepaliDate.to_nepali_date(self.date)
-        return np_date
-
 def transaction_post_save_receiver(sender, instance, created, *args, **kwargs):
     if created:
         loan_qs = Loan.objects.filter(member=instance.member)
