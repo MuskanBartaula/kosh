@@ -27,12 +27,14 @@ class NepaliDateCharField(forms.CharField):
             )
         ]
 
+
 class TransactionDateFilterForm(forms.Form):
     date = NepaliDateCharField(widget=forms.TextInput(
         attrs = {
             'placeholder': 'Choose a date here'
         }
     ), label="")
+
 
 class AddMemberToTransactionForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -56,7 +58,6 @@ class AddMemberToTransactionForm(forms.Form):
         if not qs.exists():
             raise forms.ValidationError("Member with this id doesn't exists.")
         return member_id
-
 
 
 class TransactionForm(forms.ModelForm):
