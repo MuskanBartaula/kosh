@@ -17,7 +17,22 @@ class MemberMixin(object):
         return reverse('members:index')
 
 
+def monthly_saving(request):
+    monthly_saving_exists = MonthlySaving.objects.exists()
+    if monthly_saving_exists:
+        instance = MonthlySaving.objects.first()
+        return redirect(f'/members/monthly-saving/update/{instance.pk}')
+    return redirect('members:monthly_saving_add')
+
+
 class MonthlySavingCreateView(generic.CreateView):
+    model = MonthlySaving
+    template_name = "members/monthly_saving_form.html"
+    form_class = MonthlySavingForm
+    success_url = '/'
+
+
+class MonthlySavingUpdateView(generic.UpdateView):
     model = MonthlySaving
     template_name = "members/monthly_saving_form.html"
     form_class = MonthlySavingForm
