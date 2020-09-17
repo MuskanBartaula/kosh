@@ -21,7 +21,7 @@ def monthly_saving(request):
     monthly_saving_exists = MonthlySaving.objects.exists()
     if monthly_saving_exists:
         instance = MonthlySaving.objects.first()
-        return redirect(f'/members/monthly-saving/update/{instance.pk}')
+        return redirect('members:monthly_saving_update', pk=instance.pk)
     return redirect('members:monthly_saving_add')
 
 
