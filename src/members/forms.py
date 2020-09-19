@@ -28,6 +28,14 @@ class MonthlySavingForm(forms.ModelForm):
         model = MonthlySaving
         fields = ('amount', )
 
+    def clean(self):
+        data = self.cleaned_data
+        monthly_saving_exists = MonthlySaving.objects.exists()
+        if monthly_saving_exists:
+            raise ValidationError("MonthlySaving instance already exists.")
+        return data
+
+
 class MemberForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
