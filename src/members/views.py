@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.views import generic
@@ -37,6 +38,10 @@ class MonthlySavingUpdateView(generic.UpdateView):
     template_name = "members/monthly_saving_form.html"
     form_class = MonthlySavingForm
     success_url = '/'
+
+    def get_success_url(self):
+        messages.success(self.request, "Monthly saving amount successfully updated !!!")
+        return reverse('members:monthly_saving_update', kwargs={'pk': self.object.pk})
 
 
 class MemberCreateView(MemberMixin, SuccessMessageMixin, generic.CreateView):
