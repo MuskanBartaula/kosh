@@ -11,7 +11,7 @@ from .models import Member, MonthlySaving
 class MemberMixin(object):
     def get_context_data(self, **kwargs):
         context = super(MemberMixin, self).get_context_data(**kwargs)
-        context['object_list'] = Member.objects.all()
+        context['object_list'] = Member.objects.all().order_by('membership_id')
         return context
 
     def get_success_url(self):
