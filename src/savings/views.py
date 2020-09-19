@@ -28,5 +28,8 @@ class MonthlySavingUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = MonthlySavingForm
 
     def get_success_url(self):
-        messages.success(self.request, "Monthly saving amount successfully updated !!!")
-        return reverse('members:monthly_saving_update', kwargs={'pk': self.object.pk})
+        msg = "Monthly saving amount successfully updated !!!"
+        messages.success(self.request, msg)
+        return reverse('members:monthly_saving_update', kwargs={
+            'pk': self.object.pk
+        })
