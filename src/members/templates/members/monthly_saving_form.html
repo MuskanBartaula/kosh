@@ -3,6 +3,20 @@
 {% block title %} Monthly Saving | Kosh {% endblock %}
 {% block content %}
 <div class="row">
+	{% if messages %}
+		{% for message in messages %}
+			<div class="col-12">
+					{% if message.tags == 'warning' %}
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+							<strong>Warning!</strong> {{ message }}
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					{% endif %}	
+			</div>
+		{% endfor %}
+	{% endif %}
 	<div class="col-6 mt-3">
 		<div class="shadow p-3 mb-2 bg-white rounded">
 			{% crispy form %}
