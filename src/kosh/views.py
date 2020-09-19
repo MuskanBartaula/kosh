@@ -1,6 +1,7 @@
 import datetime
 import xlwt
 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
@@ -12,7 +13,7 @@ from members.models import Member
 from transactions.forms import TransactionDateFilterForm
 from transactions.models import Transaction
 
-
+@login_required
 def members_monthly_transaction(request):
     date_in_bs = request.GET.get('date')
 
@@ -37,6 +38,7 @@ def members_monthly_transaction(request):
     }
     return render(request, "transactions/members_monthly_transaction.html", context)
 
+@login_required
 def export_to_excel(request, year, month):
     response = HttpResponse(content_type="application/ms-excel")
     response['Content-Disposition'] = 'attachment; filename="kosh.xls"'

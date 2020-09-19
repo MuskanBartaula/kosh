@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -11,6 +13,7 @@ from .forms import TransactionForm, AddMemberToTransactionForm
 from .models import Transaction
 
 
+@login_required
 def add_member_to_transaction(request):
     template_name = "transactions/add_member_to_transaction.html"
     form = AddMemberToTransactionForm(request.POST or None)
@@ -24,7 +27,7 @@ def add_member_to_transaction(request):
 
     return render(request, template_name, context)
 
-class TransactionCreateView(generic.CreateView):
+class TransactionCreateView(LoginRequiredMixin, generic.CreateView):
     model = Transaction
     template_name = "transactions/transaction_form.html"
     form_class = TransactionForm
@@ -74,7 +77,7 @@ class TransactionCreateView(generic.CreateView):
             context['last_paid_date'] = nepali_date
         return context
 
-class TransactionUpdateView(generic.UpdateView):
+class TransactionUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Transaction
     form_class = TransactionForm
     template_name = "transactions/transaction_form.html"
@@ -107,6 +110,7 @@ class TransactionUpdateView(generic.UpdateView):
         return super(TransactionUpdateView, self).form_valid(form)
 
 
+@login_required
 def transaction_voucher(request, id):
     try:
         transaction = Transaction.objects.get(id=id)

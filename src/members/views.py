@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.views import generic
@@ -17,7 +19,10 @@ class MemberMixin(object):
     def get_success_url(self):
         return reverse('members:index')
 
+class LoginSuccessMessageMixin(LoginRequiredMixin, SuccessMessageMixin):
+    pass
 
+@login_required
 def monthly_saving(request):
     monthly_saving_exists = MonthlySaving.objects.exists()
     if monthly_saving_exists:
@@ -26,25 +31,24 @@ def monthly_saving(request):
     return redirect('members:monthly_saving_add')
 
 
-class MonthlySavingCreateView(generic.CreateView):
+class MonthlySavingCreateView(LoginRequiredMixin, generic.CreateView):
     model = MonthlySaving
     template_name = "members/monthly_saving_form.html"
     form_class = MonthlySavingForm
     success_url = '/'
 
 
-class MonthlySavingUpdateView(generic.UpdateView):
+class MonthlySavingUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = MonthlySaving
     template_name = "members/monthly_saving_form.html"
     form_class = MonthlySavingForm
-    success_url = '/'
 
     def get_success_url(self):
         messages.success(self.request, "Monthly saving amount successfully updated !!!")
         return reverse('members:monthly_saving_update', kwargs={'pk': self.object.pk})
 
 
-class MemberCreateView(MemberMixin, SuccessMessageMixin, generic.CreateView):
+class MemberCreateView(LoginSuccessMessageMixin, MemberMixin, generic.CreateView):
     model = Member
     template_name = 'members/index.html'
     form_class = MemberForm
@@ -55,13 +59,13 @@ class MemberListView(generic.ListView):
     model = Member
 
 
-class MemberUpdateView(MemberMixin, SuccessMessageMixin,  generic.UpdateView):
+class MemberUpdateView(LoginSuccessMessageMixin, MemberMixin, generic.UpdateView):
     model = Member
     template_name = "members/member_form.html"
     form_class = MemberForm
     success_message = 'Member "%(name)s" successfully updated.'
 
 
-class MemberDeleteView(MemberMixin, generic.DeleteView):
+class MemberDeleteView(LoginRequiredMixin, MemberMixin, generic.DeleteView):
     model = Member
     template_name = "members/member_confirm_delete.html"

@@ -8,13 +8,14 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Login | Kosh</title>
   </head>
   <body>
 		<div class="container">
 			<div class="row">
 				<div class="col-6 mx-auto my-5">
 					<div class="shadow-lg p-3 mb-5 bg-white rounded">
+						<h1 class="text-center">Login</h1>
 						<form method="post">
 							{% csrf_token %}
 							{{ form.as_p }}
