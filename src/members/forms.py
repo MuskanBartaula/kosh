@@ -31,8 +31,10 @@ class MonthlySavingForm(forms.ModelForm):
     def clean(self):
         data = self.cleaned_data
         monthly_saving_exists = MonthlySaving.objects.exists()
+        if self.instance:
+            monthly_saving_exists = MonthlySaving.objects.exclude(pk=self.instance.pk)
         if monthly_saving_exists:
-            raise ValidationError("MonthlySaving instance already exists.")
+            raise forms.ValidationError("MonthlySaving instance already exists.")
         return data
 
 
