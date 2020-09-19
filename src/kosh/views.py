@@ -32,7 +32,7 @@ def members_monthly_transaction(request):
     context = {
         'form': form,
         'transaction_date': transaction_date,
-        'members': Member.objects.all(),
+        'members': Member.objects.all().order_by('membership_id'),
         'transactions': transactions,
     }
     return render(request, "transactions/members_monthly_transaction.html", context)
@@ -72,26 +72,25 @@ def export_to_excel(request, year, month):
 
     transactions = Transaction.objects.filter(date__year=year,
                                               date__month=month)
-    rows = transactions.values_list(
-        'member__membership_id',
-        'member__name',
-        'member__number_of_share',
-        'previous_month_loan',
-        'monthly_saving',
-        'loan_amount_paid',
-        'interest',
-        'fine',
-        'others',
-        'total_amount_paid',
-        'remaining_loan_amount',
-        'additional_loan_amount',
-        'total_loan_amount',
-    )
+    members = Member.objects.all().order_by('membership_id')
 
-    for row in rows:
+    for member in members:
         row_num += 1
-        for col_num, column in enumerate(row):
-            ws.write(row_num, col_num, column, font_style)
+        ws.write(row_num, 0, member.membership_id, font_style)
+        ws.write(row_num, 1, member.name, font_style)
+        ws.write(row_num, 2, member.number_of_share, font_style)
+        for transaction in transactions:
+            if member.membership_id == transaction.member.membership_id:
+                ws.write(row_num, 3, transaction.previous_month_loan, font_style)
+                ws.write(row_num, 4, transaction.monthly_saving, font_style)
+                ws.write(row_num, 5, transaction.loan_amount_paid, font_style)
+                ws.write(row_num, 6, transaction.interest, font_style)
+                ws.write(row_num, 7, transaction.fine, font_style)
+                ws.write(row_num, 8, transaction.others, font_style)
+                ws.write(row_num, 9, transaction.total_amount_paid, font_style)
+                ws.write(row_num, 10, transaction.remaining_loan_amount, font_style)
+                ws.write(row_num, 11, transaction.additional_loan_amount, font_style)
+                ws.write(row_num, 12, transaction.total_loan_amount, font_style)
 
     wb.save(response)
     return response
