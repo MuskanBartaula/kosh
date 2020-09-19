@@ -48,7 +48,7 @@ CUSTOM_APPS = [
     'accounts',
     'loans',
     'members',
-    # 'payments',
+    'savings',
     'transactions',
 ]
 

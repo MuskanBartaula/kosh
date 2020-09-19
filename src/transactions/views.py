@@ -8,7 +8,8 @@ from django.views import generic
 from nepali_date import NepaliDate
 
 from loans.models import Loan
-from members.models import Member, MonthlySaving
+from members.models import Member
+from savings.models import MonthlySaving
 from .forms import TransactionForm, AddMemberToTransactionForm
 from .models import Transaction
 

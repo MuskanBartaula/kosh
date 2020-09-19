@@ -6,8 +6,8 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from django.urls import reverse
 
-from .forms import MemberForm, MonthlySavingForm
-from .models import Member, MonthlySaving
+from .forms import MemberForm
+from .models import Member
 
 
 class MemberMixin(object):
@@ -21,32 +21,6 @@ class MemberMixin(object):
 
 class LoginSuccessMessageMixin(LoginRequiredMixin, SuccessMessageMixin):
     pass
-
-@login_required
-def monthly_saving(request):
-    monthly_saving_exists = MonthlySaving.objects.exists()
-    if monthly_saving_exists:
-        instance = MonthlySaving.objects.first()
-        return redirect('members:monthly_saving_update', pk=instance.pk)
-    return redirect('members:monthly_saving_add')
-
-
-class MonthlySavingCreateView(LoginRequiredMixin, generic.CreateView):
-    model = MonthlySaving
-    template_name = "members/monthly_saving_form.html"
-    form_class = MonthlySavingForm
-    success_url = '/'
-
-
-class MonthlySavingUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = MonthlySaving
-    template_name = "members/monthly_saving_form.html"
-    form_class = MonthlySavingForm
-
-    def get_success_url(self):
-        messages.success(self.request, "Monthly saving amount successfully updated !!!")
-        return reverse('members:monthly_saving_update', kwargs={'pk': self.object.pk})
-
 
 class MemberCreateView(LoginSuccessMessageMixin, MemberMixin, generic.CreateView):
     model = Member
