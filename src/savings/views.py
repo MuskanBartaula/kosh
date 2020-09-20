@@ -1,6 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.views import generic
 
 from .forms import MonthlySavingForm
@@ -30,6 +31,6 @@ class MonthlySavingUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         msg = "Monthly saving amount successfully updated !!!"
         messages.success(self.request, msg)
-        return reverse('members:monthly_saving_update', kwargs={
+        return reverse('savings:update', kwargs={
             'pk': self.object.pk
         })
