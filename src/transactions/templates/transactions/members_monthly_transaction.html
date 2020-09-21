@@ -44,7 +44,7 @@
 							<th scope="row">{{ member.membership_id }}</th>
 							<td>{{ member.name }}</td>
 							<td>{{ member.number_of_share }}</td>
-							{% if member in transactions %}
+							{% if member.id in members_transaction_list %}
 								{% for transaction in transactions %}
 									{% if transaction.member == member %}
 									<td>{{ transaction.previous_month_loan }}</td>

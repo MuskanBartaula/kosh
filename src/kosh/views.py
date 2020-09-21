@@ -31,12 +31,14 @@ def members_monthly_transaction(request):
     start_date, end_date = np_date_utils.start_end_date_in_ad()
     members = Member.objects.all().order_by('membership_id')
     transactions = Transaction.objects.filter(date__range=(start_date, end_date))
+    members_transaction_list = transactions.values_list('member_id', flat=True)
 
     context = {
         'form': form,
         'transaction_date': transaction_date,
         'members': members,
         'transactions': transactions,
+        'members_transaction_list': members_transaction_list,
     }
 
     return render(request, "transactions/members_monthly_transaction.html", context)
