@@ -27,16 +27,20 @@ Step 2: Let's create a virtual environment for our project.
 			`source venv/Scripts/activate`
 
 Step 2: Now clone this repository, use the following command: 
-		`git clone https://github.com/MuskanBartaula/kosh`
+			```
+				git clone https://github.com/MuskanBartaula/kosh
+			```
 
 Step 3: Install requirements, use the following command:
-		`pip install -r requirements.txt`
+			```
+				pip install -r requirements.txt
+			```
 
 Step 4: Create a environment variable for your database credentials
-		```
-			export DB_USER=<your_user>
-			export DB_PASSWORD=<your_password>
-		```
+			```
+				export DB_USER=<your_user>
+				export DB_PASSWORD=<your_password>
+			```
 
 Step 5: Setup the postgresql database.
 		`createdb kosh_db`
