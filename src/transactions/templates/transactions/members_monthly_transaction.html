@@ -17,54 +17,71 @@
 				{{ form | crispy }}
 				<button class="btn btn-success px-4">Filter</button>
 			</form>
-			<table class="table table-responsive">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Member's Name</th>
-						<th scope="col">Number of share</th>
-						<th scope="col">Previous Month Loan</th>
-						<th scope="col">Monthly Saving</th>
-						<th scope="col">Loan Amount Paid</th>
-						<th scope="col">Interest</th>
-						<th scope="col">Fine</th>
-						<th scope="col">Others</th>
-						<th scope="col">Total Amount Paid</th>
-						<th scope="col">Remaining Loan Amount</th>
-						<th scope="col">Additional Loan</th>
-						<th scope="col">Total Loan Amount</th>
-						<th scope="col">Voucher</th>
-						<th scope="col">Action</th>
-						
-					</tr>
-				</thead>
-				<tbody>
-					{% for member in members %}
-					<tr>
-						<th scope="row">{{ member.membership_id }}</th>
-						<td>{{ member.name }}</td>
-						<td>{{ member.number_of_share }}</td>
-						{% for transaction in transactions %}
-							{% if transaction.member == member %}
-								<td>{{ transaction.previous_month_loan }}</td>
-								<td>{{ transaction.monthly_saving }}</td>
-								<td>{{ transaction.loan_amount_paid | default_if_none:'0.00'}}</td>
-								<td>{{ transaction.interest }}</td>
-								<td>{{ transaction.fine }}</td>
-								<td>{{ transaction.others }}</td>
-								<td>{{ transaction.total_amount_paid }}</td>
-								<td>{{ transaction.remaining_loan_amount }}</td>
-								<td>{{ transaction.additional_loan_amount }}</td>
-								<td>{{ transaction.total_loan_amount }}</td>
-								<td><a href="{% url 'transactions:vouchers' transaction.id %}">Print</a></td>
-								<td><a href="{% url 'transactions:update' transaction.id %}">Edit</a></td>
-							{% endif %}
-					{% endfor %}
+			<div class="transaction_table table-responsive" style="height:800px; overflow-y:scroll;">
+				<table class="fixed header table table-striped table-bordered " style="white-space:nowrap">
+					<thead>
+						<tr>
+							<th>S.N.</th>
+							<th scope="col">Member's Name</th>
+							<th scope="col">Number of share</th>
+							<th scope="col">Previous Month Loan</th>
+							<th scope="col">Monthly Saving</th>
+							<th scope="col">Loan Amount Paid</th>
+							<th scope="col">Interest</th>
+							<th scope="col">Fine</th>
+							<th scope="col">Others</th>
+							<th scope="col">Total Amount Paid</th>
+							<th scope="col">Remaining Loan Amount</th>
+							<th scope="col">Additional Loan</th>
+							<th scope="col">Total Loan Amount</th>
+							<th scope="col">Voucher</th>
+							<th scope="col">Action</th>
 
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+						</tr>
+					</thead>
+					<tbody>
+						{% for member in members %}
+						<tr>
+							<th scope="row">{{ member.membership_id }}</th>
+							<td>{{ member.name }}</td>
+							<td>{{ member.number_of_share }}</td>
+							{% if member in transactions %}
+								{% for transaction in transactions %}
+									{% if transaction.member == member %}
+									<td>{{ transaction.previous_month_loan }}</td>
+									<td>{{ transaction.monthly_saving }}</td>
+									<td>{{ transaction.loan_amount_paid | default_if_none:'0.00'}}</td>
+									<td>{{ transaction.interest }}</td>
+									<td>{{ transaction.fine }}</td>
+									<td>{{ transaction.others }}</td>
+									<td>{{ transaction.total_amount_paid }}</td>
+									<td>{{ transaction.remaining_loan_amount }}</td>
+									<td>{{ transaction.additional_loan_amount }}</td>
+									<td>{{ transaction.total_loan_amount }}</td>
+									<td><a href="{% url 'transactions:vouchers' transaction.id %}">Print</a></td>
+									<td><a href="{% url 'transactions:update' transaction.id %}">Edit</a></td>
+									{% endif %}
+								{% endfor %}
+							{% else %}
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+							{% endif %}
+
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
