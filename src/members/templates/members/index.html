@@ -38,30 +38,32 @@
 	<div class="col-8 ml-auto">
 		<div class="table-wrapper shadow p-3 mb-2 bg-white rounded">
 			<h2>Members List</h2>
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Member's Name</th>
-						<th scope="col">Number of Share</th>
-						<th scope="col">Action</th>
-					</tr>
-				</thead>
-				<tbody>	
-					{% for member in object_list %}
+			<div class="transaction-table">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Member's Name</th>
+							<th scope="col">Number of Share</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>	
+						{% for member in object_list %}
 
-					<tr>
-						<th scope="row">{{ member.membership_id }}</th>
-						<td>{{ member.name }}</td>
-						<td>{{ member.number_of_share }}</td>
-						<td>
-							<a href="{% url 'members:update' member.id %}">Edit</a>
-							<a href="{% url 'members:delete' member.id %}">Delete</a>
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+						<tr>
+							<th scope="row">{{ member.membership_id }}</th>
+							<td>{{ member.name }}</td>
+							<td>{{ member.number_of_share }}</td>
+							<td>
+								<a href="{% url 'members:update' member.id %}">Edit</a> | 
+								<a href="{% url 'members:delete' member.id %}">Delete</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
