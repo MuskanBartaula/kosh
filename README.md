@@ -33,8 +33,8 @@ Step 3: Install requirements, use the following command:
 
 Step 4: Create a environment variable for your database credentials
 ```
-	export DB_USER=<your_user>
-	export DB_PASSWORD=<your_password>
+export DB_USER=<your_user>
+export DB_PASSWORD=<your_password>
 ```
 
 Step 5: Setup the postgresql database.
