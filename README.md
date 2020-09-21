@@ -20,7 +20,7 @@ Step 2: Let's create a virtual environment for our project.
 1. First we have to install **virtualenv** using **pip**
 	`pip install virtualenv`
 
-2. Now let;s create a virtualenv
+2. Now let's create a virtualenv
 	`virtualenv venv`
 
 3. Don't forget to **activate** your virtaul environment
@@ -42,15 +42,15 @@ export DB_USER=<your_user>
 export DB_PASSWORD=<your_password>
 ```
 
-Step 5: Create the database in postgresql.
+Step 5: Create the database in postgresql:
 		`createdb kosh_db`
 
 Step 6: Let's run the migrate command:
 		`python manage.py migrate`
 
-Step 7: Create a superuser.
+Step 7: Create a superuser:
 		`python manage.py createsuperuser`
 
-Step 8: Now, let's run the server.
+Step 8: Now, let's run the server:
 		`python manage.py runserver`
 
