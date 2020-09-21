@@ -19,6 +19,7 @@ def members_monthly_transaction(request):
 
     form = TransactionDateFilterForm()
     transaction_date = timezone.now().date()
+
     if date_in_bs:
         data = {'date': date_in_bs}
         form = TransactionDateFilterForm(data)
@@ -28,14 +29,16 @@ def members_monthly_transaction(request):
 
     np_date_utils = NepaliDateUtils(transaction_date)
     start_date, end_date = np_date_utils.start_end_date_in_ad()
+    members = Member.objects.all().order_by('membership_id')
     transactions = Transaction.objects.filter(date__range=(start_date, end_date))
 
     context = {
         'form': form,
         'transaction_date': transaction_date,
-        'members': Member.objects.all().order_by('membership_id'),
+        'members': members,
         'transactions': transactions,
     }
+
     return render(request, "transactions/members_monthly_transaction.html", context)
 
 @login_required
