@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+import os
 
 from pathlib import Path
 
@@ -20,13 +21,13 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@lzvd!8ackd%$3^mvl&c@0^ra+ezz^kcsytv-@jliyib5)ds3y'
+SECRET_KEY = "@lzvd!8ackd%$3^mvl&c@0^ra+ezz^kcsytv-@jliyib5)ds3y"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '45e0c95ad2d4.ngrok.io']
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'd329c3e01bcd.ngrok.io']
 
 # Application definition
 
@@ -93,10 +94,15 @@ WSGI_APPLICATION = 'kosh.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# postgresql database setup
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'kosh_db',
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
