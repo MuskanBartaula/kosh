@@ -1,13 +1,14 @@
-div.table-wrapper {
-	height: 350px;
-	overflow: hidden;
-	overflow-y: scroll;
+.member-table {
+	height: 295px;
 }
-
-div.transaction-table {
+.transaction-table {
 	height:400px;
+}
+.transaction-table, .member-table{
+	overflow: hidden;
 	overflow-y:scroll;
 }
+
 
 .transaction-table table {
 	white-space: nowrap;
