@@ -26,15 +26,10 @@ Step 2: Let's create a virtual environment for our project.
 		3. Don't forget to **activate** your virtaul environment
 			`source venv/Scripts/activate`
 
-Step 2: Now clone this repository, use the following command: 
-			```
-				git clone https://github.com/MuskanBartaula/kosh
-			```
+Step 2: Now clone this repository, use the following command:`git clone https://github.com/MuskanBartaula/kosh`
 
 Step 3: Install requirements, use the following command:
-			```
-				pip install -r requirements.txt
-			```
+		`pip install -r requirements.txt`
 
 Step 4: Create a environment variable for your database credentials
 			```
