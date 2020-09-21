@@ -1,4 +1,7 @@
-ngo Static Files
+#File contains the dumpdata for the client
+fixtures/members.json
+
+#no Static Files
 static_cdn
 
 *.swp
