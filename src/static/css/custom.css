@@ -3,3 +3,18 @@ div.table-wrapper {
 	overflow: hidden;
 	overflow-y: scroll;
 }
+
+div.transaction-table {
+	height:400px;
+	overflow-y:scroll;
+}
+
+.transaction-table table {
+	white-space: nowrap;
+}
+
+.transaction-table thead th {
+	position: sticky;
+	top: 0;
+	background: #eee;
+}
