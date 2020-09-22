@@ -21,13 +21,15 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+#Sorry Django SECRET_KEY I am not being able to use environment variable for you.
+#As I get incorrect padding after using environment variable.
+#I am struggling for this. Hope I will soon use environment variable for you.
 SECRET_KEY = "@lzvd!8ackd%$3^mvl&c@0^ra+ezz^kcsytv-@jliyib5)ds3y"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'd329c3e01bcd.ngrok.io']
 
 # Application definition
 
@@ -65,7 +67,7 @@ MIDDLEWARE = [
 ]
 
 
-ROOT_URLCONF = 'kosh.urls'
+ROOT_URLCONF = 'config.urls'
 
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = '/'
@@ -87,7 +89,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'kosh.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
