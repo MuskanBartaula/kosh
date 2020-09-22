@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import members_monthly_transaction, export_to_excel
+from kosh.core.views import members_monthly_transaction, export_to_excel
 
 urlpatterns = [
     path('', members_monthly_transaction, name="members_monthly_transaction"),
