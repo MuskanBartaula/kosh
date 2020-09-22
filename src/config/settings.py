@@ -16,6 +16,8 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
+APPS_DIR = BASE_DIR / "kosh"
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -48,10 +50,10 @@ THIRD_PARTY_APPS = [
 ]
 
 CUSTOM_APPS = [
-    'accounts',
-    'members',
-    'savings',
-    'transactions',
+    'kosh.accounts.apps.AccountsConfig',
+    'kosh.members.apps.MembersConfig',
+    'kosh.savings.apps.SavingsConfig',
+    'kosh.transactions.apps.TransactionsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS 
@@ -76,7 +78,7 @@ LOGIN_REDIRECT_URL = '/'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [APPS_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -145,7 +147,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [APPS_DIR / "static"]
 STATIC_ROOT = Path(BASE_DIR).parent / "static_cdn" / "static_root"
 
 MEDIA_URL = '/media/'

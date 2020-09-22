@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load nepali_date %}
+{% block title %} Voucher | {{ transaction.member.name }}{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-6 mt-5 mx-auto">
+		<div class="float-right print-button">
+			<button id="print" class="btn btn-success px-4">Print</button>
+		</div>
+		<div class="print-this shadow-lg p-3 mb-1 bg-white rounded">
+			<div class="voucher-title text-center">
+				<h1>Invoice</h1>
+			</div>
+			<div class="voucher-owner">
+				<table class="mb-2">
+					<tr>
+						<td>Member's Name:</td>
+						<td> {{ transaction.member.name }} </td>
+					</tr>
+					<tr>
+						<td>Number of Share: </td>
+						<td> {{ transaction.member.number_of_share }} </td>
+						<td>Date:</td>
+						<td> {{ transaction.date | nepali_date:"%Y/%m/%d" }} </td>
+					</tr>
+				</table>
+			</div>
+			<!-- Voucher owner's Information ends here -->
+			<div class="voucher-detail">
+				<table class="table">
+					<tr>
+						<th>S.N.</th>
+						<th>Particulars</th>
+						<th>Amount</th>
+					</tr>
+					<tr>
+						<td>1.</td>
+						<td>Monthly Saving</td>
+						<td>{{ transaction.monthly_saving }}</td>
+					</tr>
+					<tr>
+						<td>2.</td>
+						<td>Interest</td>
+						<td>{{ transaction.interest }}</td>
+					</tr>
+					<tr>
+						<td>3.</td>
+						<td>Loan Amount Paid</td>
+						<td>{{ transaction.loan_amount_paid }}</td>
+					</tr>
+					<tr>
+						<td>4.</td>
+						<td>Others</td>
+						<td>{{ transaction.others }}</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>Total</td>
+						<td>{{ transaction.total_amount_paid }}</td>
+					</tr>
+				</table>
+			</div>
+			<!-- Voucher Detail ends here -->
+		</div>
+		<!-- shadow div ends here -->
+	</div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+
+	$('#print').on('click', function() {
+		$('.print-this').printThis()
+	})
+</script>
+{% endblock %}
