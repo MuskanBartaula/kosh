@@ -8,7 +8,6 @@ urlpatterns = [
     path('export/<int:year>/<int:month>/', export_to_excel, name="export_to_excel"),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
-    path('loans/', include('loans.urls')),
     path('members/', include('members.urls')),
     path('monthly_saving/', include('savings.urls')),
     path('transactions/', include('transactions.urls')),
