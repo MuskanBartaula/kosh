@@ -54,6 +54,7 @@ CUSTOM_APPS = [
     'kosh.members.apps.MembersConfig',
     'kosh.savings.apps.SavingsConfig',
     'kosh.transactions.apps.TransactionsConfig',
+    'kosh.loans.apps.LoansConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS 
@@ -102,8 +103,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kosh_db',
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'USER': os.environ.get('KOSH_DB_USER'),
+        'PASSWORD': os.environ.get('KOSH_DB_PASSWORD'),
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }

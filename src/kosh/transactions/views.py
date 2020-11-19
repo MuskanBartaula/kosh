@@ -7,6 +7,7 @@ from django.views import generic
 
 from nepali_date import NepaliDate
 
+from kosh.loans.models import Loan   
 from kosh.members.models import Member
 from kosh.savings.models import MonthlySaving
 from .forms import TransactionForm, AddMemberToTransactionForm
@@ -43,7 +44,7 @@ class TransactionCreateView(LoginRequiredMixin, generic.CreateView):
             monthly_saving_obj = MonthlySaving.objects.latest('timestamp')
         except MonthlySaving.DoesNotExist:
             messages.warning(request, "First you must provide the amount for monthly saving")
-            return redirect('members:monthly_saving')
+            return redirect('savings:monthly_saving')
         return super().get(request, *args, **kwargs)
 
     def get_member(self):
