@@ -36,6 +36,19 @@ class TransactionDateFilterForm(forms.Form):
     ), label="")
 
 
+class TransactionDateRangeFilterForm(forms.Form):
+    from_date = NepaliDateCharField(widget=forms.TextInput(
+        attrs = {
+            'placeholder': 'Choose a date here'
+        }
+    ), label="")
+    to_date = NepaliDateCharField(widget=forms.TextInput(
+        attrs = {
+            'placeholder': 'Choose a date here'
+        }
+    ), label="")
+
+
 class AddMemberToTransactionForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
