@@ -37,9 +37,16 @@ class TransactionDateFilterForm(forms.Form):
 
 
 class TransactionDateRangeFilterForm(forms.Form):
+    member_id = forms.IntegerField(widget=forms.TextInput(
+        attrs = {
+            'placeholder': 'Enter member id here',
+            'autocomplete': 'off',
+        }
+    ), label="") 
     from_date = NepaliDateCharField(widget=forms.TextInput(
         attrs = {
-            'placeholder': 'Choose a date here'
+            'placeholder': 'Choose a date here',
+            'class': 'ndp-nepali-calendar',
         }
     ), label="")
     to_date = NepaliDateCharField(widget=forms.TextInput(

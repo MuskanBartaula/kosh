@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load nepali_date %}
+{% block title %} Members Monthly Transaction | Kosh {% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-12">
+		<div class="shadow p-3 mb-2 bg-white rounded">
+			<h1> Members Monthly Transaction </h1> 
+		</div>
+	</div>
+	<div class="col-12">
+		<div class="shadow-lg p-3 mb-5 bg-white rounded">
+			<a href="">Export To Excel </a>
+			<form action="" class="form-inline mb-2 float-right">
+				{{ form | crispy }}
+				<button class="btn btn-success px-4">Filter</button>
+			</form>
+			<div class="transaction-table table-responsive"> 
+				<table class="table table-sm table-striped table-bordered ">
+					<thead>
+						<tr>
+							<th>S.N.</th>
+							<th scope="col">Member's Name</th>
+							<th scope="col">Number of share</th>
+							<th scope="col">Previous Month Loan</th>
+							<th scope="col">Monthly Saving</th>
+							<th scope="col">Loan Amount Paid</th>
+							<th scope="col">Interest</th>
+							<th scope="col">Fine</th>
+							<th scope="col">Others</th>
+							<th scope="col">Total Amount Paid</th>
+							<th scope="col">Remaining Loan Amount</th>
+							<th scope="col">Additional Loan</th>
+							<th scope="col">Total Loan Amount</th>
+							<th scope="col">Voucher</th>
+							<th scope="col">Action</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						{% for transaction in transactions %}
+						<tr>
+							<th scope="row">{{ forloop.counter }}</th>
+							<td>{{ member.name }}</td>
+							<td>{{ member.number_of_share }}</td>
+									<td>{{ transaction.previous_month_loan }}</td>
+									<td>{{ transaction.monthly_saving }}</td>
+									<td>{{ transaction.loan_amount_paid | default_if_none:'0.00'}}</td>
+									<td>{{ transaction.interest }}</td>
+									<td>{{ transaction.fine }}</td>
+									<td>{{ transaction.others }}</td>
+									<td>{{ transaction.total_amount_paid }}</td>
+									<td>{{ transaction.remaining_loan_amount }}</td>
+									<td>{{ transaction.additional_loan_amount }}</td>
+									<td>{{ transaction.total_loan_amount }}</td>
+									<td><a href="{% url 'transactions:vouchers' transaction.id %}">Print</a></td>
+									<td><a href="{% url 'transactions:update' transaction.id %}">Edit</a></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block js %}
+	<script>
+		var fromNepaliDate = document.getElementById("id_from_date");
+		fromNepaliDate.nepaliDatePicker();
+
+		var toNepaliDate = document.getElementById("id_to_date");
+		toNepaliDate.nepaliDatePicker();
+	</script>
+{% endblock %}

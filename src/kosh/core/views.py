@@ -10,8 +10,53 @@ from nepali_date import NepaliDate
 
 from kosh.core.utils import split_date, bs_to_ad, NepaliDateUtils
 from kosh.members.models import Member
-from kosh.transactions.forms import TransactionDateFilterForm
+from kosh.transactions.forms import (TransactionDateFilterForm,
+                                     TransactionDateRangeFilterForm)
 from kosh.transactions.models import Transaction
+
+@login_required
+def transactions_filter_page(request):
+    context = {}
+    return render(request, "transactions/index.html", context)
+
+@login_required
+def individual_member_monthly_transaction(request):
+    member_id = request.GET.get('member_id')
+    from_date = request.GET.get('from_date')
+    to_date = request.GET.get('to_date')
+
+    form = TransactionDateRangeFilterForm()
+
+    member = None
+    transactions = Transaction.objects.none()
+
+    if member_id and from_date and to_date:
+        data = {
+            'member_id': member_id,
+            'from_date': from_date,
+            'to_date':to_date,
+        }
+        form = TransactionDateRangeFilterForm(data)
+        if form.is_valid():
+            member_id = form.cleaned_data.get('member_id')
+            from_date_in_bs = form.cleaned_data.get('from_date')
+            to_date_in_bs = form.cleaned_data.get('to_date')
+
+            from_date_in_ad = bs_to_ad(from_date_in_bs)
+            to_date_in_ad = bs_to_ad(to_date_in_bs)
+
+            member = Member.objects.get(membership_id=member_id)
+            print(member)
+            transactions = Transaction.objects.filter(member=member, date__range=(from_date_in_ad, to_date_in_ad))
+
+            print(transactions)
+
+    context = {
+        'form': form,
+        'member': member,
+        'transactions': transactions,
+    }
+    return render(request, "transactions/individual_member_monthly_transaction.html", context)
 
 @login_required
 def members_monthly_transaction(request):
