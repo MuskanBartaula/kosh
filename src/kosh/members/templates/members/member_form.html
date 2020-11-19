@@ -14,3 +14,10 @@
 	</div>
 </div>
 {% endblock %}
+{% block js %}
+	{% if member_update %}
+	<script>
+		$('#id_previous_due').attr('disabled', 'disabled');
+	</script>
+	{% endif %}
+{% endblock %}

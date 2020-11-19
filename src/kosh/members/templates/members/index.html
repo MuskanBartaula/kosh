@@ -33,6 +33,7 @@
 		<div class="shadow p-3 mb-2 bg-white rounded">
 			<h2>Add Members</h2>
 			{% crispy form %}
+			<p class="pt-2"><strong>Note:</strong> Previous Due will only be insertable for the first time.</p>
 		</div>
 	</div>
 	<div class="col-8 ml-auto">
@@ -50,7 +51,6 @@
 					</thead>
 					<tbody>	
 						{% for member in object_list %}
-
 						<tr>
 							<th scope="row">{{ member.membership_id }}</th>
 							<td>{{ member.name }}</td>
