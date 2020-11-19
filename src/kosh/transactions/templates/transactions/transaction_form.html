@@ -39,7 +39,8 @@
 		$('#id_remaining_loan_amount').val(remainingLoanAmount);
 
 		monthlySavingValue = parseFloat($('#id_monthly_saving').val())
-		$('#id_total_amount_paid ').val(monthlySavingValue)
+		interestValue = parseFloat($('#id_interest').val())
+		$('#id_total_amount_paid ').val(monthlySavingValue + interestValue)
 		totalLoanAmount = parseFloat(additionalLoanAmountValue) + parseFloat(remainingLoanAmount);
 		$('#id_total_loan_amount').val(totalLoanAmount);
 	})
