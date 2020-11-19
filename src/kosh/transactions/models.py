@@ -1,10 +1,12 @@
 from django.db import models
+from django.db.models import Sum
 from django.db.models.signals import post_save
 
 from nepali_date import NepaliDate
 from kosh.core.utils import split_date
 from kosh.loans.models import Loan
 from kosh.members.models import Member
+from kosh.savings.models import MemberSaving
 
 
 class Transaction(models.Model):
@@ -41,6 +43,18 @@ class Transaction(models.Model):
 
 
 def transaction_post_save_receiver(sender, instance, created, *args, **kwargs):	
+    transactions = Transaction.objects.filter(member=instance.member)
+    total_savings_dict = transactions.aggregate(total_savings=Sum('monthly_saving'))
+    total_savings = total_savings_dict.get('total_savings')
+
+    member_savings = MemberSaving.objects.filter(member=instance.member)
+    if member_savings.exists():
+        member_saving_obj = member_savings.first()
+        member_saving_obj.amount = total_savings
+        member_saving_obj.save()
+    else:
+        MemberSaving.objects.create(member=instance.member, amount=total_savings)
+
     if created:	
         loan_qs = Loan.objects.filter(member=instance.member)	
         if loan_qs.exists():	
