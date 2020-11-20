@@ -54,8 +54,6 @@ def individual_member_monthly_transaction(request):
 
             transactions = Transaction.objects.filter(member=member, date__range=(from_date_in_ad, to_date_in_ad))
 
-            print(transactions)
-
     context = {
         'form': form,
         'member': member,
