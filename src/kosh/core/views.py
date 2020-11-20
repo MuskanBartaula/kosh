@@ -1,9 +1,10 @@
 import datetime
 import xlwt
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils import timezone
 
 from nepali_date import NepaliDate
@@ -45,8 +46,12 @@ def individual_member_monthly_transaction(request):
             from_date_in_ad = bs_to_ad(from_date_in_bs)
             to_date_in_ad = bs_to_ad(to_date_in_bs)
 
-            member = Member.objects.get(membership_id=member_id)
-            print(member)
+            try:
+                member = Member.objects.get(membership_id=member_id)
+            except Member.DoesNotExist:
+                messages.warning(request, "Member doesn't exists.")
+                return redirect('members:index')
+
             transactions = Transaction.objects.filter(member=member, date__range=(from_date_in_ad, to_date_in_ad))
 
             print(transactions)

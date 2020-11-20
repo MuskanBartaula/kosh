@@ -108,6 +108,16 @@ class TransactionUpdateView(LoginRequiredMixin, generic.UpdateView):
             prev_transaction = transaction
             previous_month_loan = prev_transaction.total_loan_amount
 
+        loan_qs = Loan.objects.filter(member=current_transaction.member)
+        if loan_qs.exists():
+            loan_obj = loan_qs.first()
+            latest_transaction_qs = Transaction.objects.filter(member=current_transaction.member).order_by('-date')
+
+            if latest_transaction_qs.exists():
+                latest_transaction = latest_transaction_qs.first()
+                loan_obj.amount = latest_transaction.total_loan_amount
+                loan_obj.save()
+
         return super(TransactionUpdateView, self).form_valid(form)
 
 
