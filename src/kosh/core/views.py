@@ -25,8 +25,8 @@ def individual_member_monthly_transaction(request):
 
     form = TransactionDateRangeFilterForm()
 
-    from_date_in_ad = datetime.today().date()
-    to_date_in_ad = datetime.today().date()
+    from_date_in_ad = None
+    to_date_in_ad = None
 
 
     member = None
@@ -58,8 +58,8 @@ def individual_member_monthly_transaction(request):
     context = {
         'form': form,
         'member': member,
-        'start_date': from_date_in_ad.strftime('%Y-%m-%d'),
-        'end_date': to_date_in_ad.strftime('%Y-%m-%d'),
+        'start_date': from_date_in_ad,
+        'end_date': to_date_in_ad,
         'transactions': transactions,
     }
     return render(request, "transactions/individual_member_monthly_transaction.html", context)

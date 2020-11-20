@@ -6,13 +6,17 @@
 <div class="row">
 	<div class="col-12">
 		<div class="shadow p-3 mb-2 bg-white rounded">
-			<h1> Member Transactions </h1> 
+			{% if start_date and end_date %}
+			<h2> Member Transactions | {{ start_date | nepali_date:'%Y-%m-%d' }} - {{ end_date | nepali_date:'%Y-%m-%d' }}
+			{% else %}
+				<h2> Member Transactions </h2> 
+			{% endif %}
 		</div>
 	</div>
 	<div class="col-12">
 		<div class="shadow-lg p-3 mb-5 bg-white rounded">
 			<div>
-				{% if member.id %}
+				{% if member.id and start_date and end_date %}
 				<a href="{% url 'individual_transaction_to_excel' member.id start_date end_date %}">Export To Excel </a>
 				{% endif %}
 			<form action="" class="form-inline mb-2 float-right">
