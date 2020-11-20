@@ -11,7 +11,7 @@
 	</div>
 	<div class="col-12">
 		<div class="shadow-lg p-3 mb-5 bg-white rounded">
-			<a href="{% url 'export_to_excel' transaction_date.year transaction_date.month %}">Export To Excel </a>
+			<a href="{% url 'export_to_excel' transaction_date.year transaction_date.month %}" class="btn btn-primary">Export To Excel </a>
 			<form action="" class="form-inline mb-2 float-right">
 				{{ form | crispy }}
 				<button class="btn btn-success px-4">Filter</button>
