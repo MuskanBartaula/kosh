@@ -53,7 +53,7 @@
 						{% for member in object_list %}
 						<tr>
 							<th scope="row">{{ member.membership_id }}</th>
-							<td>{{ member.name }}</td>
+							<td><a href="{{ member.get_absolute_url }}">{{ member.name }}</a></td>
 							<td>{{ member.number_of_share }}</td>
 							<td>
 								<a href="{% url 'members:update' member.id %}">Edit</a> | 

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %} Member Detail {% endblock %}
+{% block content %}
+<div class="row mt-5">
+	<div class="col-6 mx-auto">
+		<div class="shadow-lg p-3 mb-5 bg-white rounded">
+			<div class="detail text-center">
+				<h1> Member's Detail </h1>
+			</div>
+			<table class="table table-bordered">
+				<tbody>
+					<tr>
+						<td>Member's Name</td>
+						<td>{{ object.name }}</td>
+					</tr>
+					<tr>
+						<td>Number of Share</td>
+						<td>{{ object.number_of_share }}</td>
+					</tr>
+					<tr>
+						<td>Total Saving</td>
+						<td>{{ object.membersaving.amount }}</td>
+					</tr>
+					<tr>
+						<td>Total Loan</td>
+						<td>{{ object.loan.amount }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="mt-5 text-center">
+				<button class="btn btn-link" onclick="window.history.back()">Go back</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

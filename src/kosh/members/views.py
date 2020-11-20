@@ -31,10 +31,12 @@ class MemberCreateView(LoginSuccessMessageMixin, MemberMixin, generic.CreateView
 
     def form_valid(self, form):
         previous_due = form.cleaned_data.get('previous_due')
-        member_id = form.cleaned_data.get('membership_id')
-        self.object = form.save()
-        loan_obj = Loan.objects.create(member_id=self.object.id, amount=previous_due)
-        return redirect('members:index')
+        if previous_due:
+            member_id = form.cleaned_data.get('membership_id')
+            self.object = form.save()
+            loan_obj = Loan.objects.create(member_id=self.object.id, amount=previous_due)
+            return redirect('members:index')
+        return super().form_valid(form)
 
 
 class MemberListView(generic.ListView):
@@ -60,6 +62,11 @@ class MemberUpdateView(LoginSuccessMessageMixin, MemberMixin, generic.UpdateView
         context = super().get_context_data(**kwargs)
         context['member_update'] = True
         return context
+
+
+class MemberDetailView(generic.DetailView):
+    model = Member
+    template_name = "members/member_detail.html"
 
 
 class MemberDeleteView(LoginRequiredMixin, MemberMixin, generic.DeleteView):
