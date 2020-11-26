@@ -53,7 +53,11 @@ def individual_member_monthly_transaction(request):
                 messages.warning(request, "Member doesn't exists.")
                 return redirect('members:index')
 
-            transactions = Transaction.objects.filter(member=member, date__range=(from_date_in_ad, to_date_in_ad))
+            transactions = Transaction.objects.filter(member=member,
+                                                      date__range=(
+                                                          from_date_in_ad,
+                                                          to_date_in_ad
+                                                      ))
 
     context = {
         'form': form,
@@ -62,7 +66,9 @@ def individual_member_monthly_transaction(request):
         'end_date': to_date_in_ad,
         'transactions': transactions,
     }
-    return render(request, "transactions/individual_member_monthly_transaction.html", context)
+    return render(request,
+                  "transactions/individual_member_monthly_transaction.html",
+                  context)
 
 @login_required
 def members_monthly_transaction(request):
@@ -92,7 +98,8 @@ def members_monthly_transaction(request):
         'members_transaction_list': members_transaction_list,
     }
 
-    return render(request, "transactions/members_monthly_transaction.html", context)
+    return render(request, "transactions/members_monthly_transaction.html",
+                  context)
 
 
 @login_required
@@ -210,7 +217,8 @@ def individual_transaction_to_excel(request, member_id, start_date, end_date):
 
     from_date = datetime.strptime(start_date, '%Y-%m-%d')
     to_date = datetime.strptime(end_date, '%Y-%m-%d')
-    transactions = Transaction.objects.filter(member=member, date__range=(from_date, to_date))
+    transactions = Transaction.objects.filter(member=member,
+                                              date__range=(from_date, to_date))
     members = Member.objects.all().order_by('membership_id')
 
     for transaction in transactions:
