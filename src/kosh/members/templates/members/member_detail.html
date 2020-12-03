@@ -19,11 +19,11 @@
 					</tr>
 					<tr>
 						<td>Total Saving</td>
-						<td>{{ object.membersaving.amount }}</td>
+						<td>{{ object.membersaving.amount|default:0.0 }}</td>
 					</tr>
 					<tr>
 						<td>Total Loan</td>
-						<td>{{ object.loan.amount }}</td>
+						<td>{{ object.loan.amount|default:0.0 }}</td>
 					</tr>
 				</tbody>
 			</table>
