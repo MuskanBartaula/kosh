@@ -1,7 +1,6 @@
-import datetime
+# import datetime
 import xlwt
-from datetime import date, datetime
-
+from datetime import datetime, date
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -18,9 +17,10 @@ from kosh.transactions.forms import (TransactionDateFilterForm,
 from kosh.transactions.models import Transaction
 
 
-current_date = date.today()
+current_date = timezone.now().date()
 current_year = current_date.year
 current_month = current_date.month
+current_day = current_date.day
 
 @login_required
 def individual_member_monthly_transaction(request):
@@ -67,8 +67,7 @@ def individual_member_monthly_transaction(request):
     context = {
         'form': form,
         'member': member,
-        'start_date': from_date_in_ad,
-        'end_date': to_date_in_ad,
+        'start_date': from_date_in_ad, 'end_date': to_date_in_ad,
         'transactions': transactions,
     }
     return render(request,
@@ -108,7 +107,11 @@ def members_monthly_transaction(request):
 
 
 @login_required
-def export_to_excel(request, year=current_year, month=current_month):
+def export_to_excel(
+    request,
+    year=current_year, month=current_month, day=current_day
+):
+    transaction_date = date(year, month, day)
     response = HttpResponse(content_type="application/ms-excel")
     response['Content-Disposition'] = 'attachment; filename="kosh.xls"'
 
@@ -119,6 +122,10 @@ def export_to_excel(request, year=current_year, month=current_month):
 
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
+
+    ws.write(row_num, 0, "Date", font_style)
+    ws.write(row_num, 1, str(year) + "/" + str(month), font_style)
+    row_num += 1
 
     columns = [
         'S.N.',
@@ -141,8 +148,11 @@ def export_to_excel(request, year=current_year, month=current_month):
 
     font_style = xlwt.XFStyle()
 
-    transactions = Transaction.objects.filter(date__year=year,
-                                              date__month=month)
+    np_date_utils = NepaliDateUtils(transaction_date)
+    start_date, end_date = np_date_utils.start_end_date_in_ad()
+    transactions = Transaction.objects.filter(date__range=(start_date, end_date))
+    # transactions = Transaction.objects.filter(date__year=year,
+    #                                           date__month=month)
     members = Member.objects.all().order_by('membership_id')
 
     for member in members:
@@ -243,3 +253,4 @@ def individual_transaction_to_excel(request, member_id, start_date, end_date):
 
     wb.save(response)
     return response
+

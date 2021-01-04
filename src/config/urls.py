@@ -9,10 +9,24 @@ from kosh.core.views import (
 )
 
 urlpatterns = [
-    path('', members_monthly_transaction, name="members_monthly_transaction"),
-    path('individual/', individual_member_monthly_transaction, name="individual_member_monthly_transaction"),
-    path('export/<int:year>/<int:month>/', export_to_excel, name="export_to_excel"),
-    path('individual-member-transaction-to-excel/<int:member_id>/<str:start_date>/<str:end_date>', individual_transaction_to_excel, name="individual_transaction_to_excel"),
+    path(
+        '',
+        members_monthly_transaction,
+        name="members_monthly_transaction"
+    ),
+    path(
+        'individual/',
+        individual_member_monthly_transaction,
+        name="individual_member_monthly_transaction"
+    ),
+    path(
+        'export/<int:year>/<int:month>/<int:day>/',
+        export_to_excel, name="export_to_excel"
+    ),
+    path(
+        'individual-member-transaction-to-excel/<int:member_id>/<str:start_date>/<str:end_date>',
+        individual_transaction_to_excel,
+        name="individual_transaction_to_excel"),
     path('admin/', admin.site.urls),
     path('accounts/', include('kosh.accounts.urls')),
     path('members/', include('kosh.members.urls')),
