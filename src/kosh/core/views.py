@@ -1,6 +1,6 @@
 import datetime
 import xlwt
-from datetime import datetime
+from datetime import date, datetime
 
 
 from django.contrib import messages
@@ -16,6 +16,11 @@ from kosh.members.models import Member
 from kosh.transactions.forms import (TransactionDateFilterForm,
                                      TransactionDateRangeFilterForm)
 from kosh.transactions.models import Transaction
+
+
+current_date = date.today()
+current_year = current_date.year
+current_month = current_date.month
 
 @login_required
 def individual_member_monthly_transaction(request):
@@ -103,7 +108,7 @@ def members_monthly_transaction(request):
 
 
 @login_required
-def export_to_excel(request, year, month):
+def export_to_excel(request, year=current_year, month=current_month):
     response = HttpResponse(content_type="application/ms-excel")
     response['Content-Disposition'] = 'attachment; filename="kosh.xls"'
 
@@ -160,7 +165,6 @@ def export_to_excel(request, year, month):
 
     wb.save(response)
     return response
-
 
 
 @login_required
